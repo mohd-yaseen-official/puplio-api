@@ -1,5 +1,6 @@
 import express from 'express';
 import { supabase, admin } from '../config/supabase.js';
+import { authenticateToken } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -143,7 +144,7 @@ router.post('/refresh-token', async (req, res) => {
  * @desc    Logout user
  * @access  Public
  */
-router.post('/logout', async (req, res) => {
+router.post('/logout', authenticateToken, async (req, res) => {
   try {
     const refreshToken = req.cookies?.refreshToken;
 
@@ -167,28 +168,9 @@ router.post('/logout', async (req, res) => {
  * @desc    Delete the currently logged in user
  * @access  Private
  */
-router.post('/delete', async (req, res) => {
+router.post('/delete', authenticateToken, async (req, res) => {
   try {
-    const authHeader = req.headers.authorization;
-    const accessToken = authHeader?.startsWith("Bearer ")
-      ? authHeader.split(" ")[1]
-      : null;
-
-    if (!accessToken) {
-      return res.status(401).json({
-        error: 'Missing or invalid Authorization header'
-      });
-    }
-
-    const { data, error: verifyError } = await supabase.auth.getUser(accessToken);
-
-    if (verifyError || !data?.user) {
-      return res.status(401).json({
-        error: 'Invalid or expired access token'
-      });
-    }
-
-    const userId = data.user.id;
+    const userId = req.user.id;
 
     const { error: deleteError } = await admin.auth.admin.deleteUser(userId);
 
