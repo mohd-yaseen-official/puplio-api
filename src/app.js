@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.js";
+import dogRoutes from "./routes/dogs.js";
 
 const app = express();
 
@@ -14,5 +15,6 @@ app.get("/", (req, res) => {
 });
 
 app.use('/auth', authRoutes);
+app.use("/dogs", dogRoutes);
 
 export default app;
