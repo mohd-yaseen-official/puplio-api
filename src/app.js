@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.js";
-import dogRoutes from "./routes/dogs.js";
+import dogRoutes from "./routes/dogProfiles.js";
 
 const app = express();
 
