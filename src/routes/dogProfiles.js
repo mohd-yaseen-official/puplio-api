@@ -24,6 +24,7 @@ router.get("/", authenticateToken, async (req, res) => {
             data: data,
         });
     } catch (error) {
+        console.error("Get dog profiles error:", error);
         res.status(500).json({ error: "Internal server error" });
     }
 });
@@ -177,7 +178,7 @@ router.patch("/:id", authenticateToken, async (req, res) => {
 
         return res.status(200).json({
             message: "Dog profile updated successfully",
-            data,
+            data: data,
         });
     } catch (error) {
         console.error("Update dog profile error:", error);
@@ -208,9 +209,10 @@ router.delete("/:id", authenticateToken, async (req, res) => {
         }
 
         return res.status(200).json({
-            message: "Dog profile deleted",
+            message: "Dog profile deleted successfully",
         });
-    } catch (err) {
+    } catch (error) {
+        console.error("Delete dog profile error:", error);
         return res.status(500).json({
             error: "Internal server error",
         });

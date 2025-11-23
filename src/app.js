@@ -3,6 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.js";
 import dogRoutes from "./routes/dogProfiles.js";
+import routineRoutes from "./routes/routines.js";
 
 const app = express();
 
@@ -16,5 +17,6 @@ app.get("/", (req, res) => {
 
 app.use('/auth', authRoutes);
 app.use("/dogs", dogRoutes);
+app.use("/routines", routineRoutes)
 
 export default app;
