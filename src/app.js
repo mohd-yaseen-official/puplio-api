@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.js";
 import dogRoutes from "./routes/dogProfiles.js";
 import routineRoutes from "./routes/routines.js";
+import activityRoutes from "./routes/activityLogs.js";
 
 const app = express();
 
@@ -18,5 +19,6 @@ app.get("/", (req, res) => {
 app.use('/auth', authRoutes);
 app.use("/dogs", dogRoutes);
 app.use("/routines", routineRoutes)
+app.use("/activities", activityRoutes)
 
 export default app;
